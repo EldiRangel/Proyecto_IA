@@ -9,14 +9,14 @@ class FaceEngine:
 
     def analyze_frame(self, frame):
         try:
-            # detector_backend='opencv' es el más rápido para tiempo real
+            # detecta emociones y busca coincidencias en la base de datos
             results = DeepFace.analyze(frame, actions=['emotion'], 
                                     enforce_detection=False, 
                                     detector_backend='opencv', 
                                     silent=True)
             
             name = "No registrado"
-            # Solo buscamos si hay fotos registradas
+            # solo busca fotos si hay al menos una en la base de datos
             if len(os.listdir(self.db_path)) > 0:
                 dfs = DeepFace.find(frame, db_path=self.db_path, 
                                    model_name="VGG-Face", 
